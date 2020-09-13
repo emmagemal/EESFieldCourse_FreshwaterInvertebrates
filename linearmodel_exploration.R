@@ -78,27 +78,183 @@ summary(wq_model1)
 
 wq_model2 <- lm(ASPT ~ avg.phosphate, data = imp_data)  
 summary(wq_model2)
-    # p-value = 0.251 (don't use this as the main parameter)
+    # p-value = 0.251 (don't use phosphate as the main parameter)
 
 wq_model3 <- lm(ASPT ~ avg.pH, data = imp_data)  
 summary(wq_model3)
-    # p-value = 0.2564 (don't use this)
+    # p-value = 0.2564 (don't use pH as the main parameter)
 
 wq_model4 <- lm(ASPT ~ avg.velocity_.m.s., data = imp_data)  
 summary(wq_model4)
-    # p-values = 0.255 (don't use this)
+    # p-values = 0.255 (don't use velocity as the main parameter)
 
 wq_model5 <- lm(ASPT ~ avg.conductivity_.uS.cm., data = imp_data)  
 summary(wq_model5)
-    # p-value = 0.04749 (definitely use with nitrate)
+    # p-value = 0.04749 
+
+wq_model6 <- lm(ASPT ~ avg.depth_.cm., data = imp_data)  
+summary(wq_model6)
+    # p-value = 0.1688 (don't use depth as the main parameter)
 
 
+# deduction model (start with everything)
+wq_dm1 <- lm(ASPT ~ avg.nitrate 
+                + avg.phosphate
+                + avg.conductivity_.uS.cm.
+                + avg.pH
+                + avg.velocity_.m.s.
+                + avg.depth_.cm.
+                + avg.colour_.mg.LPt.
+                + avg.turbidity_.FTU.
+                + avg.sediment_.cm.
+                + BOD_DO., data = imp_data)  
+summary(wq_model7)
+    # p-value = 0.2086
 
-wq_model3 <- lm(ASPT ~ avg.nitrate + avg.phosphate, data = imp_data)  
-summary(wq_model3)
-    # p-value = 0.1305, makes the first model worse 
+wq_dm2 <- lm(ASPT ~ avg.conductivity_.uS.cm. 
+                + avg.phosphate
+                + avg.nitrate
+                + avg.pH
+                + avg.velocity_.m.s.
+                + avg.depth_.cm.
+                + avg.colour_.mg.LPt.
+                + avg.turbidity_.FTU.
+                + avg.sediment_.cm.
+                + BOD_DO., data = imp_data)  
+summary(wq_dm2)
+    # p-value = 0.507 (don't use conductivity as the main parameter)
 
-wq_model4 <- lm(ASPT ~ avg.nitrate + avg.pH, data = imp_data)  
-summary(wq_model4)
-    # p-value = 0.02155
+wq_dm3 <- lm(ASPT ~ avg.nitrate 
+             + avg.phosphate
+             + avg.conductivity_.uS.cm.
+             + avg.pH
+             + avg.velocity_.m.s.
+             + avg.depth_.cm.
+             + avg.colour_.mg.LPt.
+             + avg.turbidity_.FTU.
+             + BOD_DO., data = imp_data)  
+summary(wq_dm3)
+    # p-value = 0.303 (removing sediment size made it worse)
+
+wq_dm4 <- lm(ASPT ~ avg.nitrate 
+             + avg.phosphate
+             + avg.conductivity_.uS.cm.
+             + avg.pH
+             + avg.velocity_.m.s.
+             + avg.depth_.cm.
+             + avg.colour_.mg.LPt.
+             + avg.sediment_.cm.
+             + BOD_DO., data = imp_data)  
+summary(wq_dm4)
+    # p-value = 0.5105 (removing turbidity made it way worse, so it's needed)
+
+wq_dm5 <- lm(ASPT ~ avg.nitrate 
+             + avg.phosphate
+             + avg.conductivity_.uS.cm.
+             + avg.pH
+             + avg.velocity_.m.s.
+             + avg.depth_.cm.
+             + avg.turbidity_.FTU.
+             + avg.sediment_.cm.
+             + BOD_DO., data = imp_data)  
+summary(wq_dm5)
+    # p-value = 0.2932 (removing color doesn't have a massive impact)
+
+wq_dm6 <- lm(ASPT ~ avg.nitrate 
+             + avg.phosphate
+             + avg.conductivity_.uS.cm.
+             + avg.pH
+             + avg.velocity_.m.s.
+             + avg.depth_.cm.
+             + avg.colour_.mg.LPt.
+             + avg.turbidity_.FTU.
+             + avg.sediment_.cm., data = imp_data)  
+summary(wq_dm6)
+    # p-value = 0.2943 (removing BOD doesn't have a massive impact)
+
+wq_dm7 <- lm(ASPT ~ avg.nitrate 
+             + avg.phosphate
+             + avg.conductivity_.uS.cm.
+             + avg.pH
+             + avg.velocity_.m.s.
+             + avg.colour_.mg.LPt.
+             + avg.turbidity_.FTU.
+             + avg.sediment_.cm.
+             + BOD_DO., data = imp_data)  
+summary(wq_dm7)
+    # p-value = 0.2893 (removing depth doesn't have a massive impact)
+
+wq_dm8 <- lm(ASPT ~ avg.nitrate 
+             + avg.phosphate
+             + avg.conductivity_.uS.cm.
+             + avg.pH
+             + avg.depth_.cm.
+             + avg.colour_.mg.LPt.
+             + avg.turbidity_.FTU.
+             + avg.sediment_.cm.
+             + BOD_DO., data = imp_data)  
+summary(wq_dm8)
+    # p-value = 0.2833 (removing velocity has the least effect so far)
+
+wq_dm9 <- lm(ASPT ~ avg.nitrate 
+             + avg.phosphate
+             + avg.conductivity_.uS.cm.
+             + avg.velocity_.m.s.
+             + avg.depth_.cm.
+             + avg.colour_.mg.LPt.
+             + avg.turbidity_.FTU.
+             + avg.sediment_.cm.
+             + BOD_DO., data = imp_data) 
+summary(wq_dm9)
+    # p-value = 0.6141 (removing pH has a large effect, needs to be kept)
+
+wq_dm10 <- lm(ASPT ~ avg.nitrate 
+             + avg.conductivity_.uS.cm.
+             + avg.pH
+             + avg.velocity_.m.s.
+             + avg.depth_.cm.
+             + avg.colour_.mg.LPt.
+             + avg.turbidity_.FTU.
+             + avg.sediment_.cm.
+             + BOD_DO., data = imp_data) 
+summary(wq_dm10)
+    # p-value = 0.4015 (removing phosphate has a large effect, should be kept)
+
+wq_elim_m1 <- lm(ASPT ~ avg.nitrate 
+             + avg.phosphate
+             + avg.conductivity_.uS.cm.
+             + avg.pH
+             + avg.colour_.mg.LPt.
+             + avg.turbidity_.FTU.
+             + avg.sediment_.cm.
+             + BOD_DO., data = imp_data) 
+summary(wq_elim_m1)
+    # p-value = 0.1392 (velocity and depth removed, improved from original)
+
+wq_elim_m2 <- lm(ASPT ~ avg.nitrate 
+                 + avg.phosphate
+                 + avg.conductivity_.uS.cm.
+                 + avg.pH
+                 + avg.colour_.mg.LPt.
+                 + avg.turbidity_.FTU.
+                 + avg.sediment_.cm., data = imp_data) 
+summary(wq_elim_m2)
+    # p-value = 0.06042 (removed BOD, as well as velocity and depth, improved even more)
+
+wq_elim_m3 <- lm(ASPT ~ avg.nitrate 
+                 + avg.phosphate
+                 + avg.conductivity_.uS.cm.
+                 + avg.pH
+                 + avg.turbidity_.FTU.
+                 + avg.sediment_.cm., data = imp_data) 
+summary(wq_elim_m3)
+    # p-value = 0.04626 (removed color, plus BOD, velocity and depth, improved even more)
+
+wq_elim_m4 <- lm(ASPT ~ avg.nitrate 
+                 + avg.phosphate
+                 + avg.conductivity_.uS.cm.
+                 + avg.pH
+                 + avg.turbidity_.FTU., data = imp_data) 
+summary(wq_elim_m4)
+    # p-value = 0.02674 (removed sediment size, plus color, BOD, velocity, depth, it's even better)
 

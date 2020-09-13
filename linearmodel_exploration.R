@@ -6,7 +6,7 @@
 library(tidyverse)
 
 # load data
-all_data <- read.csv("alldata_missingvalues.csv")
+all_data <- read.csv("Data/alldata_missingvalues.csv")
 
 ## Data manipulation ----
 str(all_data)

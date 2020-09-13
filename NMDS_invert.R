@@ -2,8 +2,8 @@
 library(vegan)
 
 # load data
-invert <- read.csv("NMDS_invertebratedata.csv")
-invert_landuse <- read.csv("NMDS_invertebratedata_landuse.csv")
+invert <- read.csv("Data/NMDS_invertebratedata.csv")
+invert_landuse <- read.csv("Data/NMDS_invertebratedata_landuse.csv")
 invert_matrix <- as.matrix(invert)
 
 # NMDS ----

@@ -6,6 +6,8 @@
 
 ## Library ----
 library(ggplot2)
+library(ggpubr)
+library(ggsci)
 
 
 # loading the data
@@ -15,70 +17,31 @@ wq_data <- wq_data %>%
 
 
 ## Plotting water quality with distance ----
+# creating the initial plot 
+(wq_scatter <- ggscatter(wq_data, x = "distance_source_km", y = "WQ",
+                         size = 7,
+                         xlab = "Distance from Source (km)",
+                         ylab = "Water Quality Index",
+                         add = c("reg.line"), 
+                         conf.int = TRUE,
+                         cor.method = "pearson"))
+
+# creating the final plot 
 (wq_plot <- ggplot(wq_data, aes(x = distance_source_km, y = WQ)) +
-                theme_light() +
                 labs(
                       x = "Distance from Source (km)",
-                      y = "Relative Water Quality"
+                      y = "Water Quality Index"
                     ) +
-                geom_point() +
-                geom_text(aes(label = site_order, hjust=1.3, vjust=1)) +
-                stat_smooth(method = "lm"))
+                stat_smooth(method = "lm", color = "black", alpha = 0.7) +
+                geom_point(size = 7.5) +
+                geom_text(x = 5.6, y = 7, label = "R = -0.43, p = 0.092", 
+                          fontface = "italic", size = 14) +
+                theme_pubr() +
+                theme(axis.text = element_text(size = 36),
+                      axis.title = element_text(size = 40),
+                      axis.title.x = element_text(margin = margin(t = 20)),
+                      axis.title.y = element_text(margin = margin(r = 20))))
 
-
-# to do: ggscatter, add = reg.line
-
-o# barchart of water quality by land use
-hist <- ggplot(wq_data, aes(x = landuse_type, y = WQ)) +
-            geom_col()
-hist
-
-
-ggplot(wq_data, aes(x = distance_source_km, y = ASPT)) +
-  theme_light() +
-  labs(
-    x = "Distance from Source (km)",
-    y = "ASPT Water Quality"
-  ) +
-  geom_point() +
-  geom_text(aes(label = site_order, hjust=1.3, vjust=1))
-
-
-
-
-#--old code for graphs--
-
-#reading new data set for creating graph
-data1 <- read.csv("Data/graph_data.csv")
-
-#graph waterq/distance and land use
-ggplot(data1, aes(x = Dist_source, y = ASPT)) +
-  theme_light() +
-  labs(
-       x = "Direct Distance from Source (m)",
-       y = "ASPT Water Quality",
-       title = "Water Quality with Increasing Distance from Source of Braid Burn",
-       subtitle = "Water quality according to ASPT index."
-       ) +
-  geom_point(aes(shape = factor(Land_use)))
-
-#same graph but no land use
-ggplot(data1, aes(x = Dist_source, y = ASPT)) +
-  theme_light() +
-  labs(
-    x = "Direct Distance from Source (m)",
-    y = "ASPT Water Quality",
-    title = "Water Quality with Increasing Distance from Source of Braid Burn",
-    subtitle = "Water quality according to ASPT index."
-  ) +
-  geom_point() +
-  geom_text(aes(label = data1$Site_no, hjust=1.3, vjust=1))
-
-
-#reading data for spearmans
-data2 <- read.csv("Data/alldata.csv")               
-
-#spearman water q/distance
-cor.test(data2$distance_source_km, data2$ASPT)
+ggsave(file = "final_plot.png", width = 14, height = 14, units = c("in"), path = "Figures")
 
 

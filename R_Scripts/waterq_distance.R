@@ -17,7 +17,7 @@ wq_data <- wq_data %>%
 
 
 ## Plotting water quality with distance ----
-# creating the initial plot 
+# creating the initial plot using own water quality index 
 (wq_scatter <- ggscatter(wq_data, x = "distance_source_km", y = "WQ",
                          size = 7,
                          xlab = "Distance from Source (km)",
@@ -45,3 +45,31 @@ wq_data <- wq_data %>%
 ggsave(file = "final_plot.png", width = 14, height = 14, units = c("in"), path = "Figures")
 
 
+
+# creating a plot of ASPT as indicator of water quality
+(wq_scatter2 <- ggscatter(wq_data, x = "distance_source_km", y = "ASPT",
+                         size = 7,
+                         xlab = "Distance from Source (km)",
+                         ylab = "Water Quality Index",
+                         add = c("reg.line"), 
+                         conf.int = TRUE,
+                         cor.coef = TRUE,
+                         cor.coef.coord = c(5.3, 7.7),
+                         cor.method = "pearson"))
+
+(wq_plot2 <- ggplot(wq_data, aes(x = distance_source_km, y = ASPT)) +
+                labs(
+                  x = "Distance from Source (km)",
+                  y = "Average Score Per Taxon"
+                ) +
+                stat_smooth(method = "lm", color = "black", alpha = 0.7) +
+                geom_point(size = 7.5) +
+                geom_text(x = 5.6, y = 7.7, label = "R = -0.52, p = 0.039", 
+                          fontface = "italic", size = 14) +
+                theme_pubr() +
+                theme(axis.text = element_text(size = 36),
+                      axis.title = element_text(size = 40),
+                      axis.title.x = element_text(margin = margin(t = 20)),
+                      axis.title.y = element_text(margin = margin(r = 20))))
+
+ggsave(file = "ASPTdist_plot.png", width = 14, height = 14, units = c("in"), path = "Figures")

@@ -1,28 +1,50 @@
 # EES Field Course - Group 1 - Freshwater Invertebrates and Water Quality
-# Sophie Rose, s1758915@sms.ed.ac.uk
+# Sophie Rose, s1739832@sms.ed.ac.uk; Emma Gemal, s1758915@sms.ed.ac.uk
 # Last edited: 14/9/2020
 
 
 
-#loading ggplot
+## Library ----
 library(ggplot2)
 
-#edit:taking from alldata
-#loading all data
-alldata <- read.csv("Data/alldata.csv")
 
-#waterq/distance with alldata
+# loading the data
+wq_data <- read.csv("Data/waterqualityvalues_alldata.csv")
+wq_data <- wq_data %>% 
+              slice(-c(17:27))
 
-ggplot(alldata, aes(x = distance_source_km, y = ASPT)) +
+
+## Plotting water quality with distance ----
+(wq_plot <- ggplot(wq_data, aes(x = distance_source_km, y = WQ)) +
+                theme_light() +
+                labs(
+                      x = "Distance from Source (km)",
+                      y = "Relative Water Quality"
+                    ) +
+                geom_point() +
+                geom_text(aes(label = site_order, hjust=1.3, vjust=1)) +
+                stat_smooth(method = "lm"))
+
+
+# to do: ggscatter, add = reg.line
+
+o# barchart of water quality by land use
+hist <- ggplot(wq_data, aes(x = landuse_type, y = WQ)) +
+            geom_col()
+hist
+
+
+ggplot(wq_data, aes(x = distance_source_km, y = ASPT)) +
   theme_light() +
   labs(
-    x = "Direct Distance from Source (m)",
-    y = "ASPT Water Quality",
-    title = "Water Quality with Increasing Distance from Source of Braid Burn",
-    subtitle = "Water quality according to ASPT index."
+    x = "Distance from Source (km)",
+    y = "ASPT Water Quality"
   ) +
   geom_point() +
-  geom_text(aes(label = alldata$site_number, hjust=1.3, vjust=1))
+  geom_text(aes(label = site_order, hjust=1.3, vjust=1))
+
+
+
 
 #--old code for graphs--
 

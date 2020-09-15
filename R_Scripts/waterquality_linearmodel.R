@@ -17,6 +17,7 @@ str(all_data)
 all_data <- all_data %>% 
                 slice(-c(17:27))
 
+
 imp_data <- all_data %>% 
                 subset(select = c(site_order,
                                   landuse_type,
@@ -52,7 +53,7 @@ ggsave(file = "correlation_matrix.png", width = 5, height = 5)
 # absorbance, turbidity, sediment size, and width have basically no effect on ASPT (R = ±0.1)
 
 
-## Making a linear model ----
+## Making a linear model for WQ ----
 m1 <- lm(ASPT ~ avg.nitrate 
          + avg.phosphate
          + avg.conductivity_uScm
@@ -167,3 +168,86 @@ summary(m8x)
 # phosphate slope = -5.3183
 # pH slope = -0.4949
 # velocity slope = -2.1734
+
+
+
+## Making a linear model for chemical and physical WQ ----
+wqm1 <- lm(avg.nitrate ~ avg.phosphate
+         + avg.conductivity_uScm
+         + avg.pH
+         + avg.velocity_ms
+         + avg.depth_cm
+         + avg.colour_mgLPt
+         + avg.turbidity_FTU
+         + avg.sediment_cm
+         + BOD_DOperc
+         + avg.width_cm
+         + avg.absorbance, data = imp_data)  
+
+wqm2 <- lm(avg.nitrate ~ avg.phosphate
+         + avg.conductivity_uScm
+         + avg.pH
+         + avg.velocity_ms
+         + avg.depth_cm
+         + avg.colour_mgLPt
+         + avg.turbidity_FTU
+         + avg.sediment_cm
+         + BOD_DOperc
+         + avg.width_cm, data = imp_data) 
+
+wqm3 <- lm(avg.nitrate ~ avg.phosphate
+         + avg.conductivity_uScm
+         + avg.pH
+         + avg.velocity_ms
+         + avg.depth_cm
+         + avg.colour_mgLPt
+         + avg.turbidity_FTU
+         + avg.sediment_cm
+         + BOD_DOperc, data = imp_data) 
+
+wqm4 <- lm(avg.nitrate ~ avg.phosphate
+         + avg.conductivity_uScm
+         + avg.pH
+         + avg.velocity_ms
+         + avg.depth_cm
+         + avg.colour_mgLPt
+         + avg.turbidity_FTU
+         + avg.sediment_cm, data = imp_data) 
+
+wqm5 <- lm(avg.nitrate ~ avg.phosphate
+         + avg.conductivity_uScm
+         + avg.pH
+         + avg.velocity_ms
+         + avg.depth_cm
+         + avg.colour_mgLPt
+         + avg.turbidity_FTU, data = imp_data) 
+
+wqm6 <- lm(avg.nitrate ~ avg.phosphate
+         + avg.conductivity_uScm
+         + avg.pH
+         + avg.velocity_ms
+         + avg.depth_cm
+         + avg.colour_mgLPt, data = imp_data) 
+
+wqm7 <- lm(avg.nitrate ~ avg.phosphate
+         + avg.conductivity_uScm
+         + avg.pH
+         + avg.velocity_ms
+         + avg.depth_cm, data = imp_data) 
+
+wqm8 <- lm(avg.nitrate ~ avg.phosphate
+         + avg.conductivity_uScm
+         + avg.pH
+         + avg.velocity_ms, data = imp_data) 
+
+wqm9 <- lm(avg.nitrate ~ avg.phosphate
+         + avg.conductivity_uScm
+         + avg.pH, data = imp_data) 
+
+wqm10 <- lm(avg.nitrate ~ avg.phosphate
+          + avg.conductivity_uScm, data = imp_data) 
+
+wqm11 <- lm(avg.nitrate ~ avg.phosphate, data = imp_data) 
+
+# comparing the F-values of the models
+AIC(wqm1, wqm2, wqm3, wqm4, wqm5, wqm6, wqm7, wqm8, wqm9, wqm10, wqm11)

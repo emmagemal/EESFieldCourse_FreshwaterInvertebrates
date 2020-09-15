@@ -7,7 +7,6 @@
 ## Library ----
 library(tidyverse)
 library(ggplot2)
-install.packages("easyGgplot2")
 library(ggpubr)
 library(ggsci)
 
@@ -46,15 +45,6 @@ wq_data <- wq_data %>%
 
 ggsave(file = "final_plot.png", width = 14, height = 14, units = c("in"), path = "Figures")
 
-
-# creating a histogram of water quality categories
-wq_cat <- wq_data %>% 
-              mutate(WQ_categories = c("5", "4", "6", "6", "7", "6", 
-                                       "4", "6", "5", "5", "5", "5", 
-                                       "4", "4", "5", "5"))
-wq_cat$WQ_categories <- as.factor
-
-(hist <- ggplot2.barplot(wq_cat, aes(x = distance_source_km, y = WQ_categories)))
 
 
 # creating a plot of ASPT as indicator of water quality

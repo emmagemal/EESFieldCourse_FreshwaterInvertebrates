@@ -12,7 +12,7 @@ library(ggsci)
 
 
 # loading the data
-wq_data <- read.csv("Data/waterqualityvalues_alldata.csv")
+wq_data <- read.csv("Data/alldata.csv")
 wq_data <- wq_data %>% 
               slice(-c(17:27))
 

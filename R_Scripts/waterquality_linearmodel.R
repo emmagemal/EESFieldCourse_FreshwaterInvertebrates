@@ -31,7 +31,7 @@ imp_data <- all_data %>%
                                   avg.pH,
                                   avg.nitrate,
                                   avg.phosphate,
-                                  BOD_DOperc,
+                                  BODmgL,
                                   avg.absorbance,
                                   sum_PS,
                                   ASPT))
@@ -41,7 +41,7 @@ cm_data <- imp_data %>%
                   subset(select = -c(site_order,
                                      landuse_type,
                                      sum_PS))
-str(model_data)
+str(cm_data)
 
 
 ## Relationship exploration ----
@@ -63,7 +63,7 @@ m1 <- lm(ASPT ~ avg.nitrate
          + avg.colour_mgLPt
          + avg.turbidity_FTU
          + avg.sediment_cm
-         + BOD_DOperc
+         + BODmgL
          + avg.width_cm
          + avg.absorbance, data = imp_data)  
 
@@ -76,7 +76,7 @@ m2 <- lm(ASPT ~ avg.nitrate
          + avg.colour_mgLPt
          + avg.turbidity_FTU
          + avg.sediment_cm
-         + BOD_DOperc
+         + BODmgL
          + avg.width_cm, data = imp_data) 
 
 m3 <- lm(ASPT ~ avg.nitrate 
@@ -88,7 +88,7 @@ m3 <- lm(ASPT ~ avg.nitrate
          + avg.colour_mgLPt
          + avg.turbidity_FTU
          + avg.sediment_cm
-         + BOD_DOperc, data = imp_data) 
+         + BODmgL, data = imp_data) 
 
 m4 <- lm(ASPT ~ avg.nitrate 
          + avg.phosphate
@@ -147,7 +147,7 @@ m12 <- lm(ASPT ~ avg.nitrate, data = imp_data)
 # comparing the F-values of the models
 AIC(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12)
 
-# since conductivity and NO3- are somewhat correlated (R=0.6), 
+# since conductivity and NO3- are somewhat correlated (R = 0.6), 
 # testing the best model (lowest F value using AIC) without conductivity
 m8x <- lm(ASPT ~ avg.nitrate 
          + avg.phosphate
@@ -170,4 +170,12 @@ summary(m8x)
 # velocity slope = -2.1734
 
 
+
+
+# testing another model 
+wq_model <- lm(ASPT ~ ASPT 
+               + avg.nitrate 
+               + avg.phosphate
+               + avg.pH
+               + avg.velocity_ms, data = imp_data) 
 

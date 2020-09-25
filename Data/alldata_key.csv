@@ -1,7 +1,7 @@
 ﻿heading,meaning
 time_sampled,"time the on-site samples were taken, when sampling began "
 site_order,order of sites from the source (from Pentlands to Peffermill)
-landuse_type,"land use categories, A = natural woodland, B = managed woodland, C = urban park, D = suburban, E = urban, F = agricultural"
+landuse_type,"land use categories, A = natural woodland, B = managed woodland, C = parkland, D = urban, E = grassland"
 distance_source_km,"distance of the site from the source (first point), in km"
 width1_cm,"river width, first reading, in cm"
 avg.width_cm,"average river width from 3 readings, in cm"

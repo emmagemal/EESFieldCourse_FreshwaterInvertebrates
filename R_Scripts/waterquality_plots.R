@@ -18,11 +18,12 @@ wq_data <- wq_data %>%
 
 
 ## Plotting water quality with distance ----
-# determining the statistics to be displayed on the ASPT vs distance plot 
+# linear regression for ASPT vs distance from source 
 ASPT_stats <- lm(ASPT ~ distance_source_km,
                 data = wq_data)
 summary(ASPT_stats)
 # p-value = 0.03859
+# F-value = 5.211 (1 and 14 degrees of freedom) 
 # R-squared = 0.2712
 
 # creating the plot of ASPT vs distance 
@@ -33,18 +34,17 @@ summary(ASPT_stats)
               ) +
               stat_smooth(method = "lm", color = "black", alpha = 0.7) +
               geom_point(size = 7.5) +
-              geom_text(x = 5.6, y = 7.7, label = expression(paste("R"^2, " = 0.2712; p = 0.039")), 
-                        parse = TRUE, fontface = "italic", size = 14) +
               theme_pubr() +
               theme(axis.text = element_text(size = 36),
                     axis.title = element_text(size = 40),
                     axis.title.x = element_text(margin = margin(t = 20)),
-                    axis.title.y = element_text(margin = margin(r = 20))))
+                    axis.title.y = element_text(margin = margin(r = 20)),
+                    plot.margin=unit(c(1,1,1.5,1.2),"cm")))
 
-ggsave(file = "ASPTdist_plot_r2.png", width = 14, height = 14, units = c("in"), path = "Figures")
+ggsave(file = "ASPTdist_plot.png", width = 14, height = 14, units = c("in"), path = "Figures")
 
 
-# determining the statistics to be displayed on the BBWI vs distance plot 
+# linear regression for BBWI vs distance from source  
 BBWI_stats <- lm(WQ ~ distance_source_km,
                 data = wq_data)
 summary(BBWI_stats)

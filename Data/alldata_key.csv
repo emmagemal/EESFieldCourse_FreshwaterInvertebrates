@@ -1,7 +1,7 @@
 ﻿heading,meaning
 time_sampled,"time the on-site samples were taken, when sampling began "
 site_order,order of sites from the source (from Pentlands to Peffermill)
-landuse_type,"land use categories, A = natural woodland, B = managed woodland, C = urban park, D = suburban, E = urban, F = grassland"
+landuse_type,"land use categories, A = natural woodland, B = managed woodland, C = urban park, D = suburban, E = urban, F = agricultural"
 distance_source_km,"distance of the site from the source (first point), in km"
 width1_cm,"river width, first reading, in cm"
 avg.width_cm,"average river width from 3 readings, in cm"
@@ -20,20 +20,23 @@ conductivity1_uScm,"water conductivity, first reading, in microsiemens per cm"
 avg.conductivity_uScm,"average water conductivity from 3 readings, in microsiemens per cm"
 pH1 ,"water pH, first reading"
 avg.pH,average water pH
-nitrate1,"nitrate concentration, first reading, no dilution factor counted, in UNIT"
-nitrate1x3,"nitration concentration * 3, accounts for a 1:3 dilution, in UNIT"
-avg.nitrate,"average nitrate concentration from 3 readings with dilution factor accounted for, in UNIT"
-phosphate1,"phosphate concentration, first reading, in UNIT"
-avg.phosphate,"average phosphate concentration from 3 readings, in UNIT"
-BOD_date,"date biological oxygen demand was conducted, O2 reading date"
-BOD_time,"time biological oxygen demand was conducted, O2 reading time"
-BOD_DOmgL,"biological oxygen demand, concentration of dissolved oxygen, in mg O2 per L "
-BOD_DOperc,"biological oxygen demand, in percentage of dissolved oxygen"
+nitrate1,"nitrate concentration, first reading, no dilution factor counted, in mg/L"
+nitrate1x3,"nitration concentration * 3, accounts for a 1:3 dilution, in mg/L"
+avg.nitrate,"average nitrate concentration from 3 readings with dilution factor accounted for, in mg/L"
+phosphate1,"phosphate concentration, first reading, in mg/L"
+avg.phosphate,"average phosphate concentration from 3 readings, in mg/L"
+DO_date,date dissolved oxygen reading was conducted
+DO_time,time dissolved oxygen reading was conducted
+DOmgL,"concentration of dissolved oxygen, in mg O2 per L "
+DOperc,percentage of dissolved oxygen
 BOD_conduScm,"conductivity using O2 probe for BOD, in microsiemens per cm"
 BOD_spcuScm,"specific conductivity using O2 probe for BOD, in microsiemens per cm"
 BOD_tempC,"water temperature using O2 probe for BOD, in ˚C"
+BODmgL,"biological oxygen demand in mg/L, calculated by 10.07 - DOmgL"
+BODperc,"biological oxygen demand in %, calculated by 100 - DOperc"
 absorbance1,"UV absorbance at 254 nm, first reading"
 avg.absorbance,average UV absorbance at wavelength of 254nm
 PS_Baetidae,"pressure sensitivity score for Baetidae, based on abundance category (AB1, AB2, AB3)"
 sum_PS,sum of pressure sensitivity scores for that site
 ASPT,"average score per taxon, calculated by sum of PS divided by total number of taxa for the site"
+WQ,water quality value based on the BBWI model

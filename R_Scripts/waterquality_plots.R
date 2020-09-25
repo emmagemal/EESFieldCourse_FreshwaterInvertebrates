@@ -12,9 +12,17 @@ library(ggsci)
 
 
 # loading the data
-wq_data <- read.csv("Data/alldata.csv")
+wq_data <- read.csv("Data/alldata1.csv")
 wq_data <- wq_data %>% 
               slice(-c(17:27))
+
+## Data exploration ----
+(hist <- ggplot(wq_data, aes(x = ASPT))  +
+            geom_histogram())
+
+normcheck <- ggqqplot(wq_data$ASPT)   # checking for normality 
+
+ggsave(normcheck, file = "QQplot_normality.png", width = 5, height = 5, units = c("in"), path = "Figures")
 
 
 ## Plotting water quality with distance ----
@@ -41,7 +49,40 @@ summary(ASPT_stats)
                     axis.title.y = element_text(margin = margin(r = 20)),
                     plot.margin=unit(c(1,1,1,1),"cm")))
 
-ggsave(file = "ASPTdist_plot.png", width = 14, height = 14, units = c("in"), path = "Figures")
+ggsave(wq_plot, file = "ASPTdist_plot.png", width = 14, height = 14, units = c("in"), path = "Figures")
+
+
+# creating plot of ASPT vs distance, with land use as a variable 
+(landuse_plot <- ggplot(wq_data, aes(x = distance_source_km, y = ASPT,
+                                     color = landuse_type)) +
+                    labs(
+                      x = "Distance from Source (km)",
+                      y = "Average Score Per Taxon",
+                      color = "Land Use Type",
+                      shape = "Land Use Type") +
+                    stat_smooth(method = "lm", color = "black", alpha = 0.7) +
+                    geom_point(size = 5, aes(shape = landuse_type, stroke = 1.2)) +
+                    theme_pubr() +
+                    theme(axis.text = element_text(size = 15),
+                          axis.title = element_text(size = 22),
+                          axis.title.x = element_text(margin = margin(t = 10)),
+                          axis.title.y = element_text(margin = margin(r = 10)),
+                          legend.position = "right",
+                          plot.margin=unit(c(1,1,1,1),"cm")) +
+                    scale_color_jama(labels = c("Natural Woodland",
+                                                "Managed Woodland",
+                                                "Parkland",
+                                                "Urban",
+                                                "Grassland")) +
+                    scale_shape_manual(values = c(18, 15, 16, 17, 8),
+                                       labels = c("Natural Woodland",
+                                                  "Managed Woodland",
+                                                  "Parkland",
+                                                  "Urban",
+                                                  "Grassland")))
+
+ggsave(landuse_plot, file = "ASPTdist_landuse.png", width = 8, height = 6.5, units = c("in"), path = "Figures")
+
 
 
 # linear regression for BBWI vs distance from source  
@@ -71,13 +112,13 @@ ggsave(file = "BBWIdist_plot.png", width = 14, height = 14, units = c("in"), pat
 
 
 
-
-## Plotting relationship between lm vs. ASPT ----
+## Plotting relationship between BBWI vs. ASPT ----
 # comparison of our water quality index (BBWI) and ASPT
 index_stats <- lm(WQ ~ ASPT,
                   data = wq_data)
 summary(index_stats)
 # p-value = 0.00035
+# F-value = 21.95 (1 and 14 degrees of freedom)
 # R-squared = 0.6106
 
 # plotting the index comparison

@@ -20,7 +20,7 @@ all_data <- all_data %>%
 
 imp_data <- all_data %>% 
                 subset(select = c(site_order,
-                                  landuse_type,
+                                  distance_source_km,
                                   avg.width_cm,
                                   avg.depth_cm,
                                   avg.velocity_ms,
@@ -178,4 +178,42 @@ wq_model <- lm(ASPT ~ ASPT
                + avg.phosphate
                + avg.pH
                + avg.velocity_ms, data = imp_data) 
+
+test <- lm(distance_source_km ~ ASPT 
+                       + avg.nitrate 
+                       + avg.phosphate
+                       + avg.pH
+                       + avg.velocity_ms, data = imp_data) 
+
+lm.predict <- cbind(imp_data, predict(test, interval = 'confidence'))
+
+(wq_plot2 <- ggplot(wq_data, aes(x = distance_source_km, y = WQ)) +
+                labs(
+                  x = "Distance from Source (km)",
+                  y = "ASPT"
+                ) +
+                stat_smooth(method = "lm", color = "black", alpha = 0.7) +
+                geom_point(size = 7.5) +
+                theme_pubr() +
+                theme(axis.text = element_text(size = 36),
+                      axis.title = element_text(size = 40),
+                      axis.title.x = element_text(margin = margin(t = 20)),
+                      axis.title.y = element_text(margin = margin(r = 20)),
+                      plot.margin=unit(c(1,1,1,1),"cm")))
+
+(wq_testplot <- ggplot(lm.predict, aes(x = distance_source_km, y = ASPT)) +
+                  labs(
+                    x = "Distance from Source (km)",
+                    y = "ASPT"
+                  ) +
+                  geom_point(size = 3) +
+                  geom_line() +
+                  theme_pubr() +
+                  theme(axis.text = element_text(size = 10),
+                        axis.title = element_text(size = 15),
+                        axis.title.x = element_text(margin = margin(t = 2)),
+                        axis.title.y = element_text(margin = margin(r = 2)),
+                        plot.margin=unit(c(1,1,1,1),"cm")))
+                      
+
 

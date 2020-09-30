@@ -1,13 +1,12 @@
 # EES Field Course - Group 1 - Freshwater Invertebrates and Water Quality
 # Linear model of water quality 
 # Emma Gemal, s1758915@sms.ed.ac.uk
-# Last edited: 14/9/2020
+# University of Edinburgh
+# Last edited: 30/9/2020
 
 ## Library ----
 library(tidyverse)
-library(GGally)
-library(ggpubr)  # idk if I need this 
-
+library(GGally) 
 
 ## Data manipulation ----
 # load data
@@ -158,25 +157,3 @@ summary(m3_cond)
 # phosphate slope = -5.3183
 # pH slope = -0.4949
 # velocity slope = -2.1734
-
-
-
-
-# testing another model 
-wq_model <- lm(ASPT ~ 1 
-               + avg.nitrate 
-               + avg.phosphate
-               + avg.pH
-               + avg.velocity_ms, data = imp_data) 
-summary(wq_model)
-
-nulltest <- lm(ASPT ~
-               + avg.nitrate 
-               + avg.phosphate
-               + avg.pH
-               + avg.velocity_ms, data = imp_data) 
-summary(nulltest)
-
-                      
-
-

@@ -13,7 +13,7 @@ library(ggsci)
 
 
 # loading the data
-wq_data <- read.csv("Data/alldata1.csv")
+wq_data <- read.csv("Data/alldata.csv")
 wq_data <- wq_data %>% 
               slice(-c(17:27))
 
@@ -21,7 +21,7 @@ wq_data <- wq_data %>%
 (hist <- ggplot(wq_data, aes(x = ASPT))  +
             geom_histogram())
 
-normcheck <- ggqqplot(wq_data$ASPT)   # checking for normality 
+(normcheck <- ggqqplot(wq_data$ASPT))   # checking for normality 
 
 ggsave(normcheck, file = "QQplot_normality.png", width = 5, height = 5, units = c("in"), path = "Figures")
 
@@ -83,7 +83,7 @@ ggsave(wq_plot, file = "ASPTdist_plot.png", width = 14, height = 14, units = c("
                                                   "Urban",
                                                   "Grassland")))
 
-ggsave(landuse_plot, file = "ASPTdist_landuse2.png", width = 7, height = 5.5, units = c("in"), path = "Figures")
+ggsave(landuse_plot, file = "ASPTdist_landuse.png", width = 7, height = 5.5, units = c("in"), path = "Figures")
 
 
 ## Investigation of impacts of land use ----
@@ -134,7 +134,6 @@ ggsave(landuse_grid, file = "landuseplots.png", width = 12, height = 5.5, units 
 
 
 
-
 ## Plotting BBWI water quality with distance ----
 # linear regression for BBWI vs distance from source  
 BBWI_stats <- lm(WQ ~ distance_source_km,
@@ -144,22 +143,21 @@ summary(BBWI_stats)
 # R-squared = 0.189
 
 # creating the plot of our water quality index (BBWI) vs. distance from source
-(wq_plot2 <- ggplot(wq_data, aes(x = distance_source_km, y = WQ)) +
-                labs(
-                      x = "Distance from Source (km)",
-                      y = "BBWI"
-                    ) +
-                stat_smooth(method = "lm", color = "black", alpha = 0.7) +
-                geom_point(size = 7.5) +
-                theme_pubr() +
-                theme(axis.text = element_text(size = 36),
-                      axis.title = element_text(size = 40),
-                      axis.title.x = element_text(margin = margin(t = 20)),
-                      axis.title.y = element_text(margin = margin(r = 20)),
-                      plot.margin=unit(c(1,1,1,1),"cm")))
+(bbwi_plot <- ggplot(wq_data, aes(x = distance_source_km, y = WQ)) +
+                  labs(
+                    x = "Distance from Source (km)",
+                    y = "Braid Burn Water Quality Index"
+                  ) +
+                  stat_smooth(method = "lm", color = "black", alpha = 0.7) +
+                  geom_point(size = 7.5) +
+                  theme_pubr() +
+                  theme(axis.text = element_text(size = 36),
+                        axis.title = element_text(size = 40),
+                        axis.title.x = element_text(margin = margin(t = 20)),
+                        axis.title.y = element_text(margin = margin(r = 20)),
+                        plot.margin=unit(c(1,1,1,1),"cm")))
 
 ggsave(file = "BBWIdist_plot.png", width = 14, height = 14, units = c("in"), path = "Figures")
-
 
 
 
@@ -168,23 +166,27 @@ ggsave(file = "BBWIdist_plot.png", width = 14, height = 14, units = c("in"), pat
 index_stats <- lm(WQ ~ ASPT,
                   data = wq_data)
 summary(index_stats)
-# p-value = 0.00035
+# p-value = 0.000351
 # F-value = 21.95 (1 and 14 degrees of freedom)
 # R-squared = 0.6106
 
 # plotting the index comparison
-(wq_aspt_plot <- ggplot(wq_data, aes(x = WQ, y = ASPT)) +
-                   labs(
-                     x = "BBWI",
-                     y = "ASPT"
-                   ) +
-                   stat_smooth(method = "lm", color = "black", alpha = 0.7) +
-                   geom_point(size = 7.5) +
-                   theme_pubr() +
-                   theme(axis.text = element_text(size = 36),
-                         axis.title = element_text(size = 40),
-                         axis.title.x = element_text(margin = margin(t = 20)),
-                         axis.title.y = element_text(margin = margin(r = 20)),
-                         plot.margin=unit(c(1,1,1,1),"cm")))
+(wq_aspt_plot <- ggplot(wq_data, aes(x = ASPT, y = WQ)) +
+                    labs(
+                      x = "BBWI",
+                      y = "ASPT"
+                    ) +
+                    stat_smooth(method = "lm", color = "black", alpha = 0.7) +
+                    geom_point(size = 7.5) +
+                    theme_pubr() +
+                    theme(axis.text = element_text(size = 36),
+                          axis.title = element_text(size = 40),
+                          axis.title.x = element_text(margin = margin(t = 20)),
+                          axis.title.y = element_text(margin = margin(r = 20)),
+                          plot.margin=unit(c(1,1,1,1),"cm")))
 
 ggsave(file = "ASPT_BBWI_plot.png", width = 14, height = 14, units = c("in"), path = "Figures")
+
+# making a panel of BBWI vs distance and ASPT vs BBWI 
+otherfigs <- ggarrange(bbwi_plot, wq_aspt_plot, nrow = 1) 
+ggsave(otherfigs, file = "bbwi_aspt_distancepanel.png", width = 24, height = 11, units = c("in"), path = "Figures")

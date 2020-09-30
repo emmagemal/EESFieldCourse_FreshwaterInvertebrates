@@ -1,6 +1,7 @@
 # EES Field Course - Group 1 - Freshwater Invertebrates and Water Quality
-# Sophie Rose, s1739832@sms.ed.ac.uk; Emma Gemal, s1758915@sms.ed.ac.uk
-# Last edited: 14/9/2020
+# Emma Gemal, s1758915@sms.ed.ac.uk; Sophie Rose, s1739832@sms.ed.ac.uk
+# University of Edinburgh
+# Last edited: 28/9/2020
 
 
 
@@ -25,7 +26,8 @@ normcheck <- ggqqplot(wq_data$ASPT)   # checking for normality
 ggsave(normcheck, file = "QQplot_normality.png", width = 5, height = 5, units = c("in"), path = "Figures")
 
 
-## Plotting water quality with distance ----
+
+## Plotting ASPT water quality with distance ----
 # linear regression for ASPT vs distance from source 
 ASPT_stats <- lm(ASPT ~ distance_source_km,
                 data = wq_data)
@@ -61,10 +63,10 @@ ggsave(wq_plot, file = "ASPTdist_plot.png", width = 14, height = 14, units = c("
                       color = "Land Use Type",
                       shape = "Land Use Type") +
                     stat_smooth(method = "lm", color = "black", alpha = 0.7) +
-                    geom_point(size = 5, aes(shape = landuse_type, stroke = 1.2)) +
+                    geom_point(size = 3.5, aes(shape = landuse_type, stroke = 1.2)) +
                     theme_pubr() +
-                    theme(axis.text = element_text(size = 15),
-                          axis.title = element_text(size = 22),
+                    theme(axis.text = element_text(size = 10),
+                          axis.title = element_text(size = 15),
                           axis.title.x = element_text(margin = margin(t = 10)),
                           axis.title.y = element_text(margin = margin(r = 10)),
                           legend.position = "right",
@@ -81,10 +83,59 @@ ggsave(wq_plot, file = "ASPTdist_plot.png", width = 14, height = 14, units = c("
                                                   "Urban",
                                                   "Grassland")))
 
-ggsave(landuse_plot, file = "ASPTdist_landuse.png", width = 8, height = 6.5, units = c("in"), path = "Figures")
+ggsave(landuse_plot, file = "ASPTdist_landuse2.png", width = 7, height = 5.5, units = c("in"), path = "Figures")
+
+
+## Investigation of impacts of land use ----
+wq_less <- wq_data[-c(8), ]   # removing a potential outlier to see effects 
+
+less_stats <- lm(ASPT ~ distance_source_km,
+                 data = wq_less)
+summary(less_stats)
+# p-value = 0.04944 (still significant, but barely!!)
+# F-value = 4.694 (1 and 13 DF)
+# R-squared = 0.2653
+
+(plot_less <- ggplot(wq_less, aes(x = distance_source_km, y = ASPT,
+                                  color = landuse_type)) +
+                  labs(
+                    x = "Distance from Source (km)",
+                    y = "Average Score Per Taxon",
+                    color = "Land Use Type",
+                    shape = "Land Use Type") +
+                  stat_smooth(method = "lm", color = "black", alpha = 0.7) +
+                  geom_point(size = 3.5, aes(shape = landuse_type, stroke = 1.2)) +
+                  theme_pubr() +
+                  theme(axis.text = element_text(size = 10),
+                        axis.title = element_text(size = 15),
+                        axis.title.x = element_text(margin = margin(t = 10)),
+                        axis.title.y = element_text(margin = margin(r = 10)),
+                        legend.position = "right",
+                        plot.margin=unit(c(1,1,1,1),"cm")) +
+                  scale_color_jama(labels = c("Natural Woodland",
+                                              "Managed Woodland",
+                                              "Parkland",
+                                              "Urban",
+                                              "Grassland")) +
+                  scale_shape_manual(values = c(18, 15, 16, 17, 8),
+                                     labels = c("Natural Woodland",
+                                                "Managed Woodland",
+                                                "Parkland",
+                                                "Urban",
+                                                "Grassland")) +
+                  expand_limits(y = c(4, 8.1)))   # to show direct comparison with all data            
+
+ggsave(plot_less, file = "ASPTdist_nooutlier.png", width = 7, height = 5.5, units = c("in"), path = "Figures")
+
+# plotting both land use plots on one panel
+landuse_grid <- ggarrange(landuse_plot, plot_less, nrow = 1, common.legend = TRUE, legend = "top") 
+ggsave(landuse_grid, file = "landuseplots.png", width = 12, height = 5.5, units = c("in"), path = "Figures")
 
 
 
+
+
+## Plotting BBWI water quality with distance ----
 # linear regression for BBWI vs distance from source  
 BBWI_stats <- lm(WQ ~ distance_source_km,
                 data = wq_data)

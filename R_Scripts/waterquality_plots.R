@@ -141,6 +141,7 @@ BBWI_stats <- lm(WQ ~ distance_source_km,
 summary(BBWI_stats)
 # p-value = 0.09241
 # R-squared = 0.189
+# F-value = 3.262, 1 and 14 degrees of freedom
 
 # creating the plot of our water quality index (BBWI) vs. distance from source
 (bbwi_plot <- ggplot(wq_data, aes(x = distance_source_km, y = WQ)) +

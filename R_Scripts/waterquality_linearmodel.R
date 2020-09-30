@@ -38,7 +38,6 @@ str(imp_data)
 
 cm_data <- imp_data %>% 
                   subset(select = -c(site_order,
-                                     landuse_type,
                                      sum_PS))
 str(cm_data)
 

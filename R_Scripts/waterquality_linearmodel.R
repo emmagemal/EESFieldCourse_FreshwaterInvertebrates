@@ -126,28 +126,12 @@ m7 <- lm(ASPT ~ avg.nitrate
 m8 <- lm(ASPT ~ avg.nitrate 
           + avg.velocity_ms, data = imp_data)  
 
-# other possible logical combinations
+# another possible logical combination
 m9 <- lm(ASPT ~ avg.nitrate 
           + avg.pH, data = imp_data)  
 
-m10 <- lm(ASPT ~ avg.nitrate 
-         + avg.depth_cm   # since it's quite correlated to pH
-         + avg.width_cm   # since it's quite correlated to phosphate
-         + avg.velocity_ms, data = imp_data) 
-
-m11 <- lm(ASPT ~ avg.nitrate 
-          + avg.pH  
-          + avg.width_cm   # since it's quite correlated to phosphate
-          + avg.velocity_ms, data = imp_data) 
-
-m12 <- lm(ASPT ~ avg.nitrate 
-          + avg.depth_cm   # since it's quite correlated to pH
-          + avg.phosphate   
-          + avg.velocity_ms, data = imp_data) 
-
 # comparing the F-values of the models
-AIC(m3, m3_cond, m7, m8, m9, m10, m11, m12)
-# depth and width did not improve the model, made it worse, so sticking to pH and phosphate
+AIC(m3, m3_cond, m7, m8, m9)
 # m3_cond still the best by almost a value of 2
 
 

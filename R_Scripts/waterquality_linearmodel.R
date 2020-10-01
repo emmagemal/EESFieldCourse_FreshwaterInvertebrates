@@ -63,7 +63,8 @@ main2 <- lm(ASPT ~ avg.phosphate, data = imp_data)
 
 main3 <- lm(ASPT ~ avg.conductivity_uScm, data = imp_data) 
 
-main4 <- lm(ASPT ~ avg.depth_cm, data = imp_data) 
+main4 <- lm(ASPT ~ avg.depth_cm, data = imp_data) # unlikely to be the one to be included 
+                                                  # based on general knowledge of the water quality
 
 AIC(main1, main2, main3, main4)
 # nitrate is the best, do not remove this from the model 

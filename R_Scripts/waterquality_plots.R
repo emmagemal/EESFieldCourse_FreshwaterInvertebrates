@@ -48,7 +48,7 @@ summary(ASPT_stats)
 # F-value = 5.211 (1 and 14 degrees of freedom) 
 # R-squared = 0.2712
 
-# creating the plot of ASPT vs distance 
+# creating the plot of ASPT vs distance (no land use)
 (wq_plot <- ggplot(wq_data, aes(x = distance_source_km, y = ASPT)) +
               labs(
                 x = "Distance from Source (km)",
@@ -77,10 +77,10 @@ ggsave(wq_plot, file = "ASPTdist_plot.png", width = 14, height = 14, units = c("
                     stat_smooth(method = "lm", color = "black", alpha = 0.7) +
                     geom_point(size = 3.5, aes(shape = landuse_type, stroke = 1.2)) +
                     theme_pubr() +
-                    theme(axis.text = element_text(size = 10),
+                    theme(axis.text = element_text(size = 13),
                           axis.text.x = element_text(margin = margin(t = 0)),
                           axis.text.y = element_text(margin = margin(r = 0)),
-                          axis.title = element_text(size = 15),
+                          axis.title = element_text(size = 16),
                           axis.title.x = element_text(margin = margin(t = 10)),
                           axis.title.y = element_text(margin = margin(r = 10)),
                           axis.ticks = element_blank(),
@@ -100,6 +100,41 @@ ggsave(wq_plot, file = "ASPTdist_plot.png", width = 14, height = 14, units = c("
 
 ggsave(landuse_plot, file = "ASPTdist_landuse.png", width = 8, height = 5.5, units = c("in"), path = "Figures")
 
+# moving legend to the bottom (if better for report format)
+(keybot_aspt <- ggplot(wq_data, aes(x = distance_source_km, y = ASPT,
+                                     color = landuse_type)) +
+                    labs(
+                      x = "Distance from Source (km)",
+                      y = "ASPT",
+                      color = "Land Use Type",
+                      shape = "Land Use Type") +
+                    stat_smooth(method = "lm", color = "black", alpha = 0.7) +
+                    geom_point(size = 3.5, aes(shape = landuse_type, stroke = 1.2)) +
+                    theme_pubr() +
+                    theme(axis.text = element_text(size = 13),
+                          axis.text.x = element_text(margin = margin(t = 0)),
+                          axis.text.y = element_text(margin = margin(r = 0)),
+                          axis.title = element_text(size = 16),
+                          axis.title.x = element_text(margin = margin(t = 10)),
+                          axis.title.y = element_text(margin = margin(r = 10)),
+                          axis.ticks = element_blank(),
+                          legend.position = "bottom",
+                          plot.margin=unit(c(1,1,1,1),"cm")) +
+                    scale_color_jama(labels = c("Natural Woodland",
+                                                "Managed Woodland",
+                                                "Parkland",
+                                                "Urban",
+                                                "Grassland")) +
+                    scale_shape_manual(values = c(18, 15, 16, 17, 8),
+                                       labels = c("Natural Woodland",
+                                                  "Managed Woodland",
+                                                  "Parkland",
+                                                  "Urban",
+                                                  "Grassland")))
+keybot_aspt <- keybot_aspt + guides(color = guide_legend(nrow = 2)) 
+
+ggsave(keybot_aspt, file = "ASPTdist_landuse_bottom.png", width = 6, height = 5.5, units = c("in"), path = "Figures")
+
 
 
 ## Plotting BBWI water quality with distance ----
@@ -111,7 +146,7 @@ summary(BBWI_stats)
 # R-squared = 0.189
 # F-value = 3.262, 1 and 14 degrees of freedom
 
-# creating the plot of our water quality index (BBWI) vs. distance from source
+# creating the plot of our water quality index (BBWI) vs. distance from source (no land use)
 (bbwi_plot <- ggplot(wq_data, aes(x = distance_source_km, y = WQ)) +
                   labs(
                     x = "Distance from Source (km)",
@@ -139,10 +174,10 @@ ggsave(file = "BBWIdist_plot.png", width = 14, height = 14, units = c("in"), pat
                     stat_smooth(method = "lm", color = "black", alpha = 0.7) +
                     geom_point(size = 3.5, aes(shape = landuse_type, stroke = 1.2)) +
                     theme_pubr() +
-                    theme(axis.text = element_text(size = 10),
+                    theme(axis.text = element_text(size = 13),
                           axis.text.x = element_text(margin = margin(t = 0)),
                           axis.text.y = element_text(margin = margin(r = 0)),
-                          axis.title = element_text(size = 15),
+                          axis.title = element_text(size = 16),
                           axis.title.x = element_text(margin = margin(t = 10)),
                           axis.title.y = element_text(margin = margin(r = 10)),
                           axis.ticks = element_blank(),
@@ -162,6 +197,40 @@ ggsave(file = "BBWIdist_plot.png", width = 14, height = 14, units = c("in"), pat
 
 ggsave(landuse_plot2, file = "BBWIdist_landuse.png", width = 8, height = 5.5, units = c("in"), path = "Figures")
 
+# moving legend to the bottom (if better for report format)
+(keybot_bbwi <- ggplot(wq_data, aes(x = distance_source_km, y = WQ,
+                                      color = landuse_type)) +
+                  labs(
+                    x = "Distance from Source (km)",
+                    y = "BBWI",
+                    color = "Land Use Type",
+                    shape = "Land Use Type") +
+                  stat_smooth(method = "lm", color = "black", alpha = 0.7) +
+                  geom_point(size = 3.5, aes(shape = landuse_type, stroke = 1.2)) +
+                  theme_pubr() +
+                  theme(axis.text = element_text(size = 13),
+                        axis.text.x = element_text(margin = margin(t = 0)),
+                        axis.text.y = element_text(margin = margin(r = 0)),
+                        axis.title = element_text(size = 16),
+                        axis.title.x = element_text(margin = margin(t = 10)),
+                        axis.title.y = element_text(margin = margin(r = 10)),
+                        axis.ticks = element_blank(),
+                        legend.position = "bottom",
+                        plot.margin=unit(c(1,1,1,1),"cm")) +
+                  scale_color_jama(labels = c("Natural Woodland",
+                                              "Managed Woodland",
+                                              "Parkland",
+                                              "Urban",
+                                              "Grassland")) +
+                  scale_shape_manual(values = c(18, 15, 16, 17, 8),
+                                     labels = c("Natural Woodland",
+                                                "Managed Woodland",
+                                                "Parkland",
+                                                "Urban",
+                                                "Grassland")))
+keybot_bbwi <- keybot_bbwi + guides(color = guide_legend(nrow = 2)) 
+
+ggsave(keybot_bbwi, file = "BBWIdist_landuse_bottom.png", width = 6, height = 5.5, units = c("in"), path = "Figures")
 
 
 ## Plotting relationship between BBWI vs. ASPT ----
@@ -183,9 +252,12 @@ summary(index_stats)
                     geom_point(size = 7.5) +
                     theme_pubr() +
                     theme(axis.text = element_text(size = 36),
+                          axis.text.x = element_text(margin = margin(t = 0)),
+                          axis.text.y = element_text(margin = margin(r = 0)),
                           axis.title = element_text(size = 40),
                           axis.title.x = element_text(margin = margin(t = 20)),
                           axis.title.y = element_text(margin = margin(r = 20)),
+                          axis.ticks = element_blank(),
                           plot.margin=unit(c(1,1,1,1),"cm")))
 
 ggsave(file = "ASPT_BBWI_plot.png", width = 14, height = 14, units = c("in"), path = "Figures")
@@ -208,35 +280,35 @@ summary(less_stats)
 
 (plot_less <- ggplot(wq_less, aes(x = distance_source_km, y = ASPT,
                                   color = landuse_type)) +
-    labs(
-      x = "Distance from Source (km)",
-      y = "Average Score Per Taxon",
-      color = "Land Use Type",
-      shape = "Land Use Type") +
-    stat_smooth(method = "lm", color = "black", alpha = 0.7) +
-    geom_point(size = 3.5, aes(shape = landuse_type, stroke = 1.2)) +
-    theme_pubr() +
-    theme(axis.text = element_text(size = 10),
-          axis.text.x = element_text(margin = margin(t = 0)),
-          axis.text.y = element_text(margin = margin(r = 0)),
-          axis.title = element_text(size = 15),
-          axis.title.x = element_text(margin = margin(t = 10)),
-          axis.title.y = element_text(margin = margin(r = 10)),
-          axis.ticks = element_blank(),
-          legend.position = "right",
-          plot.margin=unit(c(1,1,1,1),"cm")) +
-    scale_color_jama(labels = c("Natural Woodland",
-                                "Managed Woodland",
-                                "Parkland",
-                                "Urban",
-                                "Grassland")) +
-    scale_shape_manual(values = c(18, 15, 16, 17, 8),
-                       labels = c("Natural Woodland",
-                                  "Managed Woodland",
-                                  "Parkland",
-                                  "Urban",
-                                  "Grassland")) +
-    expand_limits(y = c(4, 8.1)))   # to show direct comparison with all data            
+                labs(
+                  x = "Distance from Source (km)",
+                  y = "Average Score Per Taxon",
+                  color = "Land Use Type",
+                  shape = "Land Use Type") +
+                stat_smooth(method = "lm", color = "black", alpha = 0.7) +
+                geom_point(size = 3.5, aes(shape = landuse_type, stroke = 1.2)) +
+                theme_pubr() +
+                theme(axis.text = element_text(size = 10),
+                      axis.text.x = element_text(margin = margin(t = 0)),
+                      axis.text.y = element_text(margin = margin(r = 0)),
+                      axis.title = element_text(size = 15),
+                      axis.title.x = element_text(margin = margin(t = 10)),
+                      axis.title.y = element_text(margin = margin(r = 10)),
+                      axis.ticks = element_blank(),
+                      legend.position = "right",
+                      plot.margin=unit(c(1,1,1,1),"cm")) +
+                scale_color_jama(labels = c("Natural Woodland",
+                                            "Managed Woodland",
+                                            "Parkland",
+                                            "Urban",
+                                            "Grassland")) +
+                scale_shape_manual(values = c(18, 15, 16, 17, 8),
+                                   labels = c("Natural Woodland",
+                                              "Managed Woodland",
+                                              "Parkland",
+                                              "Urban",
+                                              "Grassland")) +
+                expand_limits(y = c(4, 8.1)))   # to show direct comparison with all data            
 
 ggsave(plot_less, file = "ASPTdist_nooutlier.png", width = 7, height = 5.5, units = c("in"), path = "Figures")
 

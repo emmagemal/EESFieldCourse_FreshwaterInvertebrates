@@ -105,7 +105,7 @@ m6 <- lm(ASPT ~ avg.nitrate
          + avg.phosphate, data = imp_data)  
 
 
-# comparing the F-values of the models
+# comparing the models
 AIC(m1, m2, m3, m4, m5, m6) 
 # best is m3
 
@@ -130,7 +130,7 @@ m8 <- lm(ASPT ~ avg.nitrate
 m9 <- lm(ASPT ~ avg.nitrate 
           + avg.pH, data = imp_data)  
 
-# comparing the F-values of the models
+# comparing the models
 AIC(m3, m3_cond, m7, m8, m9)
 # m3_cond still the best by almost a value of 2
 

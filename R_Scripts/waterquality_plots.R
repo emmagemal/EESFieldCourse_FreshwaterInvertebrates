@@ -21,9 +21,15 @@ wq_data <- wq_data %>%
 (hist <- ggplot(wq_data, aes(x = ASPT))  +
             geom_histogram())
 
-(normcheck <- ggqqplot(wq_data$ASPT))   # checking for normality 
-
+# checking for normality
+(normcheck <- ggqqplot(wq_data$ASPT))   # looks fairly fine
 ggsave(normcheck, file = "QQplot_normality.png", width = 5, height = 5, units = c("in"), path = "Figures")
+
+resids <- resid(lm(ASPT ~ distance_source_km, data = wq_data))
+shapiro.test(resids)   # not statistically significant (can assume normality)
+
+resids_bbwi <- resid(lm(WQ ~ distance_source_km, data = wq_data))
+shapiro.test(resids_bbwi)  # also not statistically significant (can assume normality)
 
 
 
@@ -66,9 +72,12 @@ ggsave(wq_plot, file = "ASPTdist_plot.png", width = 14, height = 14, units = c("
                     geom_point(size = 3.5, aes(shape = landuse_type, stroke = 1.2)) +
                     theme_pubr() +
                     theme(axis.text = element_text(size = 10),
+                          axis.text.x = element_text(margin = margin(t = 0)),
+                          axis.text.y = element_text(margin = margin(r = 0)),
                           axis.title = element_text(size = 15),
                           axis.title.x = element_text(margin = margin(t = 10)),
                           axis.title.y = element_text(margin = margin(r = 10)),
+                          axis.ticks = element_blank(),
                           legend.position = "right",
                           plot.margin=unit(c(1,1,1,1),"cm")) +
                     scale_color_jama(labels = c("Natural Woodland",
@@ -86,7 +95,7 @@ ggsave(wq_plot, file = "ASPTdist_plot.png", width = 14, height = 14, units = c("
 ggsave(landuse_plot, file = "ASPTdist_landuse.png", width = 7, height = 5.5, units = c("in"), path = "Figures")
 
 
-## Investigation of impacts of land use ----
+## Investigation of impacts of outlier ----
 wq_less <- wq_data[-c(8), ]   # removing a potential outlier to see effects 
 
 less_stats <- lm(ASPT ~ distance_source_km,
@@ -107,9 +116,12 @@ summary(less_stats)
                   geom_point(size = 3.5, aes(shape = landuse_type, stroke = 1.2)) +
                   theme_pubr() +
                   theme(axis.text = element_text(size = 10),
+                        axis.text.x = element_text(margin = margin(t = 0)),
+                        axis.text.y = element_text(margin = margin(r = 0)),
                         axis.title = element_text(size = 15),
                         axis.title.x = element_text(margin = margin(t = 10)),
                         axis.title.y = element_text(margin = margin(r = 10)),
+                        axis.ticks = element_blank(),
                         legend.position = "right",
                         plot.margin=unit(c(1,1,1,1),"cm")) +
                   scale_color_jama(labels = c("Natural Woodland",

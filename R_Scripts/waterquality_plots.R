@@ -25,11 +25,17 @@ wq_data <- wq_data %>%
 (normcheck <- ggqqplot(wq_data$ASPT))   # looks fairly fine
 ggsave(normcheck, file = "QQplot_normality.png", width = 5, height = 5, units = c("in"), path = "Figures")
 
-resids <- resid(lm(ASPT ~ distance_source_km, data = wq_data))
+shapiro.test(wq_data$ASPT)  # is not statistically significant (can assume normality of ASPT)
+
+# assessing normality of residuals
+resids <- resid(lm(ASPT ~ distance_source_km, data = wq_data))  
 shapiro.test(resids)   # not statistically significant (can assume normality)
 
 resids_bbwi <- resid(lm(WQ ~ distance_source_km, data = wq_data))
 shapiro.test(resids_bbwi)  # also not statistically significant (can assume normality)
+
+resids_ind <- resid(lm(ASPT ~ WQ, data = wq_data))
+shapiro.test(resids_ind)   # also not statistically significant (can assume normality)
 
 
 

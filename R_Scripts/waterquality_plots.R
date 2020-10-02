@@ -112,12 +112,11 @@ ggsave(landuse_plot, file = "ASPTdist_landuse.png", width = 8, height = 5.5, uni
                     geom_point(size = 3.5, aes(shape = landuse_type, stroke = 1.2)) +
                     theme_pubr() +
                     theme(axis.text = element_text(size = 13),
-                          axis.text.x = element_text(margin = margin(t = 0)),
-                          axis.text.y = element_text(margin = margin(r = 0)),
+                          axis.text.x = element_text(margin = margin(t = 2)),
+                          axis.text.y = element_text(margin = margin(r = 2)),
                           axis.title = element_text(size = 16),
                           axis.title.x = element_text(margin = margin(t = 10)),
                           axis.title.y = element_text(margin = margin(r = 10)),
-                          axis.ticks = element_blank(),
                           legend.position = "bottom",
                           plot.margin=unit(c(1,1,1,1),"cm")) +
                     scale_color_jama(labels = c("Natural Woodland",
@@ -209,12 +208,11 @@ ggsave(landuse_plot2, file = "BBWIdist_landuse.png", width = 8, height = 5.5, un
                   geom_point(size = 3.5, aes(shape = landuse_type, stroke = 1.2)) +
                   theme_pubr() +
                   theme(axis.text = element_text(size = 13),
-                        axis.text.x = element_text(margin = margin(t = 0)),
-                        axis.text.y = element_text(margin = margin(r = 0)),
+                        axis.text.x = element_text(margin = margin(t = 2)),
+                        axis.text.y = element_text(margin = margin(r = 2)),
                         axis.title = element_text(size = 16),
                         axis.title.x = element_text(margin = margin(t = 10)),
                         axis.title.y = element_text(margin = margin(r = 10)),
-                        axis.ticks = element_blank(),
                         legend.position = "bottom",
                         plot.margin=unit(c(1,1,1,1),"cm")) +
                   scale_color_jama(labels = c("Natural Woodland",

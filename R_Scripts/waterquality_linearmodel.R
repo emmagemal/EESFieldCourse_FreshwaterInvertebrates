@@ -19,7 +19,6 @@ all_data <- all_data %>%
 
 imp_data <- all_data %>% 
                 subset(select = c(site_order,
-                                  distance_source_km,
                                   avg.width_cm,
                                   avg.depth_cm,
                                   avg.velocity_ms,
@@ -134,6 +133,8 @@ m9 <- lm(ASPT ~ avg.nitrate
 AIC(m3, m3_cond, m7, m8, m9)
 # m3_cond still the best by almost a value of 2
 
+null <- lm(ASPT ~ 1, data = imp_data)
+AIC(null, m3_cond)
 
 summary(m3_cond)
 # intercept = 12.7565

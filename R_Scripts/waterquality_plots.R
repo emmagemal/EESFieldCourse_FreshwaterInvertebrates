@@ -132,7 +132,7 @@ ggsave(landuse_plot, file = "ASPTdist_landuse.png", width = 8, height = 5.5, uni
                                                   "Grassland")))
 keybot_aspt <- keybot_aspt + guides(color = guide_legend(nrow = 2)) 
 
-ggsave(keybot_aspt, file = "ASPTdist_landuse_bottom.png", width = 6, height = 5.5, units = c("in"), path = "Figures")
+ggsave(keybot_aspt, file = "ASPTdist_landuse_bottom.png", width = 6, height = 6, units = c("in"), path = "Figures")
 
 
 
@@ -228,7 +228,7 @@ ggsave(landuse_plot2, file = "BBWIdist_landuse.png", width = 8, height = 5.5, un
                                                 "Grassland")))
 keybot_bbwi <- keybot_bbwi + guides(color = guide_legend(nrow = 2)) 
 
-ggsave(keybot_bbwi, file = "BBWIdist_landuse_bottom.png", width = 6, height = 5.5, units = c("in"), path = "Figures")
+ggsave(keybot_bbwi, file = "BBWIdist_landuse_bottom.png", width = 6, height = 6, units = c("in"), path = "Figures")
 
 
 ## Plotting relationship between BBWI vs. ASPT ----

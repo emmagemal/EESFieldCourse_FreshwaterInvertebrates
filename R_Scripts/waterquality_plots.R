@@ -86,13 +86,13 @@ ggsave(wq_plot, file = "ASPTdist_plot.png", width = 14, height = 14, units = c("
                           axis.ticks = element_blank(),
                           legend.position = "right",
                           plot.margin=unit(c(1,1,1,1),"cm")) +
-                    scale_color_jama(labels = c("Natural Woodland",
+                    scale_color_jama(labels = c("Semi-Natural Woodland",
                                                 "Managed Woodland",
                                                 "Parkland",
                                                 "Urban",
                                                 "Grassland")) +
                     scale_shape_manual(values = c(18, 15, 16, 17, 8),
-                                       labels = c("Natural Woodland",
+                                       labels = c("Semi-Natural Woodland",
                                                   "Managed Woodland",
                                                   "Parkland",
                                                   "Urban",
@@ -119,13 +119,13 @@ ggsave(landuse_plot, file = "ASPTdist_landuse.png", width = 8, height = 5.5, uni
                           axis.title.y = element_text(margin = margin(r = 10)),
                           legend.position = "bottom",
                           plot.margin=unit(c(1,1,1,1),"cm")) +
-                    scale_color_jama(labels = c("Natural Woodland",
+                    scale_color_jama(labels = c("Semi-Natural Woodland",
                                                 "Managed Woodland",
                                                 "Parkland",
                                                 "Urban",
                                                 "Grassland")) +
                     scale_shape_manual(values = c(18, 15, 16, 17, 8),
-                                       labels = c("Natural Woodland",
+                                       labels = c("Semi-Natural Woodland",
                                                   "Managed Woodland",
                                                   "Parkland",
                                                   "Urban",
@@ -182,13 +182,13 @@ ggsave(file = "BBWIdist_plot.png", width = 14, height = 14, units = c("in"), pat
                           axis.ticks = element_blank(),
                           legend.position = "right",
                           plot.margin=unit(c(1,1,1,1),"cm")) +
-                    scale_color_jama(labels = c("Natural Woodland",
+                    scale_color_jama(labels = c("Semi-Natural Woodland",
                                                 "Managed Woodland",
                                                 "Parkland",
                                                 "Urban",
                                                 "Grassland")) +
                     scale_shape_manual(values = c(18, 15, 16, 17, 8),
-                                       labels = c("Natural Woodland",
+                                       labels = c("Semi-Natural Woodland",
                                                   "Managed Woodland",
                                                   "Parkland",
                                                   "Urban",
@@ -215,13 +215,13 @@ ggsave(landuse_plot2, file = "BBWIdist_landuse.png", width = 8, height = 5.5, un
                         axis.title.y = element_text(margin = margin(r = 10)),
                         legend.position = "bottom",
                         plot.margin=unit(c(1,1,1,1),"cm")) +
-                  scale_color_jama(labels = c("Natural Woodland",
+                  scale_color_jama(labels = c("Semi-Natural Woodland",
                                               "Managed Woodland",
                                               "Parkland",
                                               "Urban",
                                               "Grassland")) +
                   scale_shape_manual(values = c(18, 15, 16, 17, 8),
-                                     labels = c("Natural Woodland",
+                                     labels = c("Semi-Natural Woodland",
                                                 "Managed Woodland",
                                                 "Parkland",
                                                 "Urban",

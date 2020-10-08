@@ -1,7 +1,7 @@
 # EES Field Course - Group 1 - Freshwater Invertebrates and Water Quality
 # Emma Gemal, s1758915@sms.ed.ac.uk; Sophie Rose, s1739832@sms.ed.ac.uk
 # University of Edinburgh
-# Last edited: 28/9/2020
+# Last edited: 8/10/2020
 
 
 

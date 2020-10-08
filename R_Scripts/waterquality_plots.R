@@ -313,28 +313,3 @@ ggsave(keybot_outlier, file = "ASPTdist_nooutlier.png", width = 6, height = 5.5,
 # plotting both land use plots (ASPT & no outlier) on one panel
 landuse_grid <- ggarrange(landuse_plot, plot_less, nrow = 1, common.legend = TRUE, legend = "top") 
 ggsave(landuse_grid, file = "landuseplots.png", width = 12, height = 5.5, units = c("in"), path = "Figures")
-
-
-
-# removing outlier from ASPT vs. BBWI plot
-less_indices <- lm(ASPT ~ WQ, data = wq_less)
-summary(less_indices)
-# p-value = 0.001737
-# F-value = 15.42 (1 and 13 degrees of freedom)
-# R-squared = 0.5073
-
-(wq_aspt_plot <- ggplot(wq_data, aes(x = ASPT, y = WQ)) +
-    labs(
-      x = "BBWI",
-      y = "ASPT"
-    ) +
-    stat_smooth(method = "lm", color = "black", alpha = 0.4) +
-    geom_point(size = 3.5) +
-    theme_pubr() +
-    theme(axis.text = element_text(size = 13),
-          axis.text.x = element_text(margin = margin(t = 2)),
-          axis.text.y = element_text(margin = margin(r = 2)),
-          axis.title = element_text(size = 16),
-          axis.title.x = element_text(margin = margin(t = 10)),
-          axis.title.y = element_text(margin = margin(r = 10)),
-          plot.margin=unit(c(1,1,1,1),"cm")))

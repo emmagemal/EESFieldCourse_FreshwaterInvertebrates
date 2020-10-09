@@ -71,7 +71,7 @@ ggsave(wq_plot, file = "ASPTdist_plot.png", width = 14, height = 14, units = c("
                                      color = landuse_type)) +
                     labs(
                       x = "Distance from Source (km)",
-                      y = "Average Score Per Taxon",
+                      y = "ASPT",
                       color = "Land Use Type",
                       shape = "Land Use Type") +
                     stat_smooth(method = "lm", color = "black", alpha = 0.4) +
